@@ -1,0 +1,28 @@
+CREATE DATABASE IF NOT EXISTS nutriru;
+USE nutriru;
+
+CREATE TABLE IF NOT EXISTS usuarios (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    matricula VARCHAR(20) NOT NULL UNIQUE,
+    nome VARCHAR(100) NOT NULL,
+    tipo ENUM('ESTUDANTE', 'SERVIDOR', 'VISITANTE') NOT NULL,
+    saldo DECIMAL(8,2) NOT NULL DEFAULT 0.00
+);
+
+CREATE TABLE IF NOT EXISTS refeicoes (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    tipo ENUM('ALMOCO', 'JANTAR') NOT NULL,
+    data DATE NOT NULL,
+    cardapio VARCHAR(255),
+    preco_base DECIMAL(6,2) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS historico_entradas (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    usuario_id INT NOT NULL,
+    refeicao_id INT NOT NULL,
+    data_hora DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    valor_cobrado DECIMAL(6,2) NOT NULL,
+    FOREIGN KEY (usuario_id) REFERENCES usuarios(id),
+    FOREIGN KEY (refeicao_id) REFERENCES refeicoes(id)
+);
