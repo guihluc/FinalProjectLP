@@ -1,0 +1,11 @@
+# bytecode e pastas de build
+*.class
+out/
+bin/
+
+# IDE
+.vscode/
+.idea/
+
+# drivers baixados manualmente
+lib/*.jar

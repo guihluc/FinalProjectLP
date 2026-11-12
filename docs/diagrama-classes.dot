@@ -1,0 +1,70 @@
+digraph classes {
+  rankdir=BT;
+  graph [fontname="Helvetica", nodesep=0.6, ranksep=0.8];
+  node [shape=plaintext, fontname="Helvetica", fontsize=11];
+  edge [fontname="Helvetica", fontsize=10];
+
+  Autenticavel [label=<
+    <table border="1" cellborder="0" cellspacing="0" cellpadding="4">
+      <tr><td align="center"><i>&laquo;interface&raquo;</i><br/><b>Autenticavel</b></td></tr>
+      <hr/>
+      <tr><td align="left">+ validarMatricula(): boolean<br align="left"/>+ autorizarEntrada(refeicao: Refeicao): boolean<br align="left"/></td></tr>
+    </table>>];
+
+  UsuarioRU [label=<
+    <table border="1" cellborder="0" cellspacing="0" cellpadding="4">
+      <tr><td align="center"><b><i>UsuarioRU</i></b></td></tr>
+      <hr/>
+      <tr><td align="left">- matricula: String<br align="left"/>- nome: String<br align="left"/>- saldo: double<br align="left"/></td></tr>
+      <hr/>
+      <tr><td align="left">+ calcularPrecoRefeicao(refeicao: Refeicao): double <i>{abstract}</i><br align="left"/>+ adicionarCredito(valor: double): void<br align="left"/>+ autorizarEntrada(refeicao: Refeicao): boolean<br align="left"/>+ getMatricula(): String<br align="left"/>+ getNome(): String<br align="left"/>+ getSaldo(): double<br align="left"/></td></tr>
+    </table>>];
+
+  Estudante [label=<
+    <table border="1" cellborder="0" cellspacing="0" cellpadding="4">
+      <tr><td align="center"><b>Estudante</b></td></tr>
+      <hr/>
+      <tr><td align="left">- curso: String<br align="left"/></td></tr>
+      <hr/>
+      <tr><td align="left">+ calcularPrecoRefeicao(refeicao: Refeicao): double<br align="left"/>+ validarMatricula(): boolean<br align="left"/>+ getCurso(): String<br align="left"/></td></tr>
+    </table>>];
+
+  Servidor [label=<
+    <table border="1" cellborder="0" cellspacing="0" cellpadding="4">
+      <tr><td align="center"><b>Servidor</b></td></tr>
+      <hr/>
+      <tr><td align="left">- departamento: String<br align="left"/></td></tr>
+      <hr/>
+      <tr><td align="left">+ calcularPrecoRefeicao(refeicao: Refeicao): double<br align="left"/>+ validarMatricula(): boolean<br align="left"/>+ getDepartamento(): String<br align="left"/></td></tr>
+    </table>>];
+
+  Refeicao [label=<
+    <table border="1" cellborder="0" cellspacing="0" cellpadding="4">
+      <tr><td align="center"><b><i>Refeicao</i></b></td></tr>
+      <hr/>
+      <tr><td align="left">- nome: String<br align="left"/>- horarioInicio: LocalTime<br align="left"/>- horarioFim: LocalTime<br align="left"/></td></tr>
+      <hr/>
+      <tr><td align="left">+ getPrecoBase(): double <i>{abstract}</i><br align="left"/>+ getNome(): String<br align="left"/>+ getHorarioInicio(): LocalTime<br align="left"/>+ getHorarioFim(): LocalTime<br align="left"/></td></tr>
+    </table>>];
+
+  Almoco [label=<
+    <table border="1" cellborder="0" cellspacing="0" cellpadding="4">
+      <tr><td align="center"><b>Almoco</b></td></tr>
+      <hr/>
+      <tr><td align="left">+ getPrecoBase(): double<br align="left"/></td></tr>
+    </table>>];
+
+  Jantar [label=<
+    <table border="1" cellborder="0" cellspacing="0" cellpadding="4">
+      <tr><td align="center"><b>Jantar</b></td></tr>
+      <hr/>
+      <tr><td align="left">+ getPrecoBase(): double<br align="left"/></td></tr>
+    </table>>];
+
+  UsuarioRU -> Autenticavel [style=dashed, arrowhead=empty];
+  Estudante -> UsuarioRU [arrowhead=empty];
+  Servidor -> UsuarioRU [arrowhead=empty];
+  Almoco -> Refeicao [arrowhead=empty];
+  Jantar -> Refeicao [arrowhead=empty];
+  UsuarioRU -> Refeicao [style=dashed, arrowhead=vee, label="usa"];
+}
