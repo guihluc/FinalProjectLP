@@ -1,0 +1,39 @@
+digraph der {
+  rankdir=LR;
+  graph [fontname="Helvetica", nodesep=0.8, ranksep=1.4];
+  node [shape=plaintext, fontname="Helvetica", fontsize=11];
+  edge [fontname="Helvetica", fontsize=10, dir=both, arrowtail=tee, arrowhead=crow];
+
+  usuarios [label=<
+    <table border="1" cellborder="1" cellspacing="0" cellpadding="4">
+      <tr><td colspan="2" bgcolor="#dfe9f5"><b>usuarios</b></td></tr>
+      <tr><td align="left">PK</td><td align="left">id INT</td></tr>
+      <tr><td></td><td align="left">matricula VARCHAR(20) UNIQUE</td></tr>
+      <tr><td></td><td align="left">nome VARCHAR(100)</td></tr>
+      <tr><td></td><td align="left">tipo ENUM(ESTUDANTE, SERVIDOR, VISITANTE)</td></tr>
+      <tr><td></td><td align="left">saldo DECIMAL(8,2)</td></tr>
+    </table>>];
+
+  refeicoes [label=<
+    <table border="1" cellborder="1" cellspacing="0" cellpadding="4">
+      <tr><td colspan="2" bgcolor="#dfe9f5"><b>refeicoes</b></td></tr>
+      <tr><td align="left">PK</td><td align="left">id INT</td></tr>
+      <tr><td></td><td align="left">tipo ENUM(ALMOCO, JANTAR)</td></tr>
+      <tr><td></td><td align="left">data DATE</td></tr>
+      <tr><td></td><td align="left">cardapio VARCHAR(255)</td></tr>
+      <tr><td></td><td align="left">preco_base DECIMAL(6,2)</td></tr>
+    </table>>];
+
+  historico_entradas [label=<
+    <table border="1" cellborder="1" cellspacing="0" cellpadding="4">
+      <tr><td colspan="2" bgcolor="#dfe9f5"><b>historico_entradas</b></td></tr>
+      <tr><td align="left">PK</td><td align="left">id INT</td></tr>
+      <tr><td align="left">FK</td><td align="left">usuario_id INT</td></tr>
+      <tr><td align="left">FK</td><td align="left">refeicao_id INT</td></tr>
+      <tr><td></td><td align="left">data_hora DATETIME</td></tr>
+      <tr><td></td><td align="left">valor_cobrado DECIMAL(6,2)</td></tr>
+    </table>>];
+
+  usuarios -> historico_entradas [label="1 : N"];
+  refeicoes -> historico_entradas [label="1 : N"];
+}
