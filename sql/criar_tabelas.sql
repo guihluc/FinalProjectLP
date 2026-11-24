@@ -1,15 +1,18 @@
-CREATE DATABASE IF NOT EXISTS nutriru;
+-- recria o banco do zero (apaga os dados que ja existem)
+DROP DATABASE IF EXISTS nutriru;
+CREATE DATABASE nutriru;
 USE nutriru;
 
-CREATE TABLE IF NOT EXISTS usuarios (
+CREATE TABLE usuarios (
     id INT AUTO_INCREMENT PRIMARY KEY,
     matricula VARCHAR(20) NOT NULL UNIQUE,
     nome VARCHAR(100) NOT NULL,
     tipo ENUM('ESTUDANTE', 'SERVIDOR', 'VISITANTE') NOT NULL,
+    detalhe VARCHAR(100),
     saldo DECIMAL(8,2) NOT NULL DEFAULT 0.00
 );
 
-CREATE TABLE IF NOT EXISTS refeicoes (
+CREATE TABLE refeicoes (
     id INT AUTO_INCREMENT PRIMARY KEY,
     tipo ENUM('ALMOCO', 'JANTAR') NOT NULL,
     data DATE NOT NULL,
@@ -17,7 +20,7 @@ CREATE TABLE IF NOT EXISTS refeicoes (
     preco_base DECIMAL(6,2) NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS historico_entradas (
+CREATE TABLE historico_entradas (
     id INT AUTO_INCREMENT PRIMARY KEY,
     usuario_id INT NOT NULL,
     refeicao_id INT NOT NULL,
