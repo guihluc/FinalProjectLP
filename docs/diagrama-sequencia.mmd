@@ -1,0 +1,38 @@
+sequenceDiagram
+    actor U as Usuario
+    participant M as MenuCLI
+    participant C as ControleAcesso
+    participant UD as UsuarioDAO
+    participant RD as RefeicaoDAO
+    participant HD as HistoricoEntradaDAO
+    participant R as usuario : UsuarioRU
+    participant DB as MySQL
+
+    U->>M: opcao 6 (matricula e id da refeicao)
+    M->>C: entrar(matricula, idRefeicao)
+    C->>UD: buscarPorMatricula(matricula)
+    UD->>DB: SELECT usuarios
+    DB-->>UD: linha do usuario
+    UD-->>C: UsuarioRU
+    C->>RD: buscarPorId(idRefeicao)
+    RD->>DB: SELECT refeicoes
+    DB-->>RD: linha da refeicao
+    RD-->>C: Refeicao
+    C->>R: validarMatricula()
+    R-->>C: true
+    C->>R: calcularPrecoRefeicao(refeicao)
+    R-->>C: preco
+    C->>R: debitar(preco)
+    alt saldo menor que o preco
+        R-->>C: SaldoInsuficienteException
+        C-->>M: SaldoInsuficienteException
+        M-->>U: mensagem de erro
+    else saldo suficiente
+        C->>UD: atualizarSaldo(conexao, usuario)
+        UD->>DB: UPDATE usuarios
+        C->>HD: registrar(conexao, usuarioId, refeicaoId, preco)
+        HD->>DB: INSERT historico_entradas
+        C->>DB: commit
+        C-->>M: valor cobrado
+        M-->>U: catraca liberada
+    end
