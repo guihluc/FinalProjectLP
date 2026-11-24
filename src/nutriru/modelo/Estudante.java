@@ -12,6 +12,11 @@ public class Estudante extends UsuarioRU {
         this.curso = curso;
     }
 
+    public Estudante(int id, String matricula, String nome, String curso, double saldo) {
+        super(id, matricula, nome, saldo);
+        this.curso = curso;
+    }
+
     @Override
     public double calcularPrecoRefeicao(Refeicao refeicao) {
         return refeicao.getPrecoBase() * PERCENTUAL_ESTUDANTE;
@@ -22,6 +27,16 @@ public class Estudante extends UsuarioRU {
     public boolean validarMatricula() {
         String matricula = getMatricula();
         return matricula != null && matricula.matches("\\d{11}");
+    }
+
+    @Override
+    public String getTipo() {
+        return "ESTUDANTE";
+    }
+
+    @Override
+    public String getDetalhe() {
+        return curso;
     }
 
     public String getCurso() {

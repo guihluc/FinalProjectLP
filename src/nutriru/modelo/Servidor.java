@@ -9,6 +9,11 @@ public class Servidor extends UsuarioRU {
         this.departamento = departamento;
     }
 
+    public Servidor(int id, String matricula, String nome, String departamento, double saldo) {
+        super(id, matricula, nome, saldo);
+        this.departamento = departamento;
+    }
+
     // servidor paga o preco base inteiro
     @Override
     public double calcularPrecoRefeicao(Refeicao refeicao) {
@@ -20,6 +25,16 @@ public class Servidor extends UsuarioRU {
     public boolean validarMatricula() {
         String matricula = getMatricula();
         return matricula != null && matricula.matches("\\d{7}");
+    }
+
+    @Override
+    public String getTipo() {
+        return "SERVIDOR";
+    }
+
+    @Override
+    public String getDetalhe() {
+        return departamento;
     }
 
     public String getDepartamento() {
